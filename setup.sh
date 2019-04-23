@@ -3,6 +3,7 @@
 set -e
 
 ################################## EDIT THIS ##################################
+
 # PostgreSQL admin account:
 export pg_user=postgres
 export pg_password=guacamole
@@ -12,19 +13,17 @@ export guac_user=guacamole
 export guac_password=guacamole
 
 # Change this to the IP address your reverse proxy, if you have one
-export ip="127.0.0.1"
+export ip="192.168.1.13"
+
 ###############################################################################
 
 
 bash build-guac-db.sh
 bash build-guac-rp.sh
 
-# create a volume for the data
-sudo docker volume create --name guac-data
 
 # run the docker containers, and restart them after a reboot
-sudo docker run --restart unless-stopped --name guac-pg -d guac-pg \
-    -v guac-data:/var/lib/postgres/data
+sudo docker run --restart unless-stopped --name guac-pg -d guac-pg
 sudo docker run --restart unless-stopped --name guacd -d guacamole/guacd
 
 sudo docker run --restart unless-stopped --name guacamole-rp \
