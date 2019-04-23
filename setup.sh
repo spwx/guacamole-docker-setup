@@ -19,6 +19,8 @@ export ip="127.0.0.1"
 bash build-guac-db.sh
 bash build-guac-rp.sh
 
+# create a volume for the data
+sudo docker volume create --name guac-data
 
 # run the docker containers, and restart them after a reboot
 sudo docker run --restart unless-stopped --name guac-pg -d guac-pg \

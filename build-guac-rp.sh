@@ -23,7 +23,7 @@ line=`expr $line - 1`
 
 sed -i "${line}r tmp" server.xml
 
-cat <<EOT >> Dockerfile
+cat <<EOT > Dockerfile
 FROM guacamole/guacamole
 COPY server.xml /usr/local/tomcat/conf/server.xml
 EOT
@@ -32,4 +32,4 @@ EOT
 sudo docker build . --tag guacamole-rp
 
 cd ..
-#rm -rf guacamole-rp
+rm -rf guacamole-rp
