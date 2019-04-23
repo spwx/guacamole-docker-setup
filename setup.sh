@@ -2,20 +2,18 @@
 
 set -e
 
-# PostgreSQL account to be used by guacamole:
-guac_user=guacamole
-guac_password=guacamole
-
 # PostgreSQL admin account:
 pg_user=postgres
 pg_password=guacamole
+
+# PostgreSQL account to be used by guacamole:
+guac_user=guacamole
+guac_password=guacamole
 
 
 # generate the initdb.sql script
 sudo docker run --rm guacamole/guacamole \
     /opt/guacamole/bin/initdb.sh --postgres > initdb.sql
-
-sudo docker volume create guac-data
 
 # append guacamole user creation to initdb.sql
 cat <<EOT >> initdb.sql
@@ -38,9 +36,13 @@ ENV POSTGRES_PASSWORD $pg_password
 COPY initdb.sql /docker-entrypoint-initdb.d/
 EOT
 
+# Create a docker volume to store the database data
+sudo docker volume create guac-data
+
 # run the docker containers, and restart them after a reboot
 sudo docker build . --tag guac-pg
-sudo docker run --restart unless-stopped --name guac-pg -d guac-pg
+sudo docker run --restart unless-stopped --name guac-pg -d guac-pg \
+    -v guac-data:/var/lib/postgres/data
 sudo docker run --restart unless-stopped --name guacd -d guacamole/guacd
 
 sudo docker run --restart unless-stopped --name guacamole \
