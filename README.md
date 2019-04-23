@@ -32,4 +32,5 @@ for your site:
 Make sure you edit the two variables on lines 1, 2 and 8.
 
 `PATH_TO_GUACAMOLE` can be set to whatever you want
+
 `HOSTNAME_OR_IP` is the IP address of your server
