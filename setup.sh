@@ -13,7 +13,7 @@ export guac_user=guacamole
 export guac_password=guacamole
 
 # Change this to the IP address your reverse proxy, if you have one
-export ip="192.168.1.13"
+export ip="127.0.0.1"
 
 ###############################################################################
 
