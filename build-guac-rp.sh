@@ -9,11 +9,11 @@ sudo docker run --rm guacamole/guacamole \
     cat /usr/local/tomcat/conf/server.xml > server.xml
 
 cat <<EOF > tmp
-<Valve className="org.apache.catalina.valves.RemoteIpValve"
-               internalProxies="$ip"
-               remoteIpHeader="x-forwarded-for"
-               remoteIpProxiesHeader="x-forwarded-by"
-               protocolHeader="x-forwarded-proto" />
+        <Valve className="org.apache.catalina.valves.RemoteIpValve"
+                       internalProxies="$ip"
+                       remoteIpHeader="x-forwarded-for"
+                       remoteIpProxiesHeader="x-forwarded-by"
+                       protocolHeader="x-forwarded-proto" />
 
 EOF
 
@@ -21,7 +21,7 @@ EOF
 line=`grep -n '</Host>' server.xml | cut -f1 -d:`
 line=`expr $line - 1`
 
-sed "${line}r tmp" guacamole/server.xml
+sed -i "${line}r tmp" server.xml
 
 cat <<EOT >> Dockerfile
 FROM guacamole/guacamole
@@ -32,4 +32,4 @@ EOT
 sudo docker build . --tag guacamole-rp
 
 cd ..
-rm -rf guacamole-rp
+#rm -rf guacamole-rp

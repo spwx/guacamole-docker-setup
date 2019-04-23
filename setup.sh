@@ -25,7 +25,7 @@ sudo docker run --restart unless-stopped --name guac-pg -d guac-pg \
     -v guac-data:/var/lib/postgres/data
 sudo docker run --restart unless-stopped --name guacd -d guacamole/guacd
 
-sudo docker run --restart unless-stopped --name guacamole \
+sudo docker run --restart unless-stopped --name guacamole-rp \
     --link guacd:guacd \
     --link guac-pg:postgres \
     -e POSTGRES_DATABASE=guacamole_db \
