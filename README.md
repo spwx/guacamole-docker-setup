@@ -13,18 +13,23 @@ own guacamole server setup.
 
 ## Nginx
 
-If you are using Nginx as a reverse proxy, add the bellow to the server block
+If you are using Nginx as a reverse proxy, add the below to the server block
 for your site:
 
 ```nginx
-        location /PATH_TO_GUACAMOLE/ {
-            proxy_pass http://HOSTNAME_OR_IP:8080/guacamole/;
+        location /<PATH_TO_GUACAMOLE>/ {
+            proxy_pass http://<HOSTNAME_OR_IP>:8080/guacamole/;
             proxy_buffering off;
             proxy_http_version 1.1;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection $http_connection;
-            proxy_cookie_path /guacamole/ /PATH_TO_GUACAMOLE/;
+            proxy_cookie_path /guacamole/ /<PATH_TO_GUACAMOLE>/;
             access_log off;
         }
 ```
+
+Make sure you edit the two variables on lines 1, 2 and 8.
+
+`PATH_TO_GUACAMOLE` can be set to whatever you want
+`HOSTNAME_OR_IP` is the IP address of your server
